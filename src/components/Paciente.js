@@ -4,6 +4,7 @@ import React from 'react';
 const Paciente = ({
   item,
   setModalVisible,
+  setPaciente,
   pacienteEditar,
   pacienteEliminar,
 }) => {
@@ -25,7 +26,10 @@ const Paciente = ({
     setModalVisible(true);
   };
   return (
-    <Pressable onLongPress={setModalPaciente(true)}>
+    <Pressable
+      onLongPress={() => {
+        setModalPaciente(true), setPaciente(item);
+      }}>
       <View style={styles.contenedor}>
         <Text style={styles.label}>Paciente</Text>
         <Text style={styles.texto}>{paciente}</Text>
