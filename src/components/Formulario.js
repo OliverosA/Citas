@@ -111,6 +111,10 @@ const Formulario = ({modalVisible, setModalVisible}) => {
               numberOfLines={4}
             />
           </View>
+
+          <Pressable style={styles.btnNuevaCita}>
+            <Text style={styles.btnNuevaCitaTexto}>Agregar Paciente</Text>
+          </Pressable>
         </ScrollView>
       </SafeAreaView>
     </Modal>
@@ -167,6 +171,20 @@ const styles = StyleSheet.create({
   fechaContenedor: {
     backgroundColor: '#FFF',
     borderRadius: 10,
+  },
+  btnNuevaCita: {
+    backgroundColor: '#F59E0B',
+    borderRadius: 10,
+    marginHorizontal: 30,
+    marginVertical: 50,
+    paddingVertical: 15,
+  },
+  btnNuevaCitaTexto: {
+    textAlign: 'center',
+    color: '#5827A4',
+    textTransform: 'uppercase',
+    fontWeight: '900',
+    fontSize: 16,
   },
 });
 export default Formulario;
