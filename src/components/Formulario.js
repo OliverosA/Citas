@@ -6,10 +6,23 @@ import {
   View,
   TextInput,
   ScrollView,
+  Pressable,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
+import DatePicker from 'react-native-date-picker';
 
-const Formulario = ({modalVisible}) => {
+const Formulario = ({modalVisible, setModalVisible}) => {
+  const [paciente, setPaciente] = useState('');
+  const [propietario, setPropietario] = useState('');
+  const [email, setEmail] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [fecha, setFecha] = useState(new Date());
+  const [sintomas, setSintomas] = useState('');
+
+  cancelarCitaHandler = () => {
+    setModalVisible(!modalVisible);
+  };
+
   return (
     <Modal animationType="slide" visible={modalVisible}>
       <SafeAreaView style={styles.contenido}>
@@ -19,12 +32,22 @@ const Formulario = ({modalVisible}) => {
             <Text style={styles.tituloBold}>Cita</Text>
           </Text>
 
+          <Pressable style={styles.btnCancelar}>
+            <Text
+              style={styles.btnCancelarTexto}
+              onLongPress={cancelarCitaHandler}>
+              Cancelar
+            </Text>
+          </Pressable>
+
           <View style={styles.campo}>
             <Text style={styles.label}>Nombre Paciente</Text>
             <TextInput
               style={styles.input}
               placeholder="Nombre Paciente"
               placeholderTextColor={'#666'}
+              value={paciente}
+              onChangeText={setPaciente}
             />
           </View>
 
@@ -34,6 +57,8 @@ const Formulario = ({modalVisible}) => {
               style={styles.input}
               placeholder="Nombre Propietario"
               placeholderTextColor={'#666'}
+              value={propietario}
+              onChangeText={setPropietario}
             />
           </View>
 
@@ -44,6 +69,8 @@ const Formulario = ({modalVisible}) => {
               placeholder="Email Propietario"
               placeholderTextColor={'#666'}
               keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
             />
           </View>
 
@@ -54,15 +81,34 @@ const Formulario = ({modalVisible}) => {
               placeholder="Telefono Propietario"
               placeholderTextColor={'#666'}
               keyboardType="number-pad"
+              value={telefono}
+              onChangeText={setTelefono}
             />
+          </View>
+
+          <View style={styles.campo}>
+            <Text style={styles.label}>Fecha Alta</Text>
+            <View style={styles.fechaContenedor}>
+              <DatePicker
+                date={fecha}
+                locale="es"
+                onDateChange={date => {
+                  setFecha(date);
+                }}
+              />
+            </View>
           </View>
 
           <View style={styles.campo}>
             <Text style={styles.label}>Sintomas</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, styles.sintomasInput]}
               placeholder="Sintomas"
               placeholderTextColor={'#666'}
+              value={sintomas}
+              onChangeText={setSintomas}
+              multiline
+              numberOfLines={4}
             />
           </View>
         </ScrollView>
@@ -85,6 +131,20 @@ const styles = StyleSheet.create({
   tituloBold: {
     fontWeight: '900',
   },
+  btnCancelar: {
+    backgroundColor: '#5827A4',
+    borderRadius: 10,
+    marginHorizontal: 30,
+    marginVertical: 30,
+    padding: 10,
+  },
+  btnCancelarTexto: {
+    color: '#FFF',
+    fontSize: 20,
+    fontWeight: '900',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+  },
   campo: {
     marginTop: 10,
     marginHorizontal: 30,
@@ -100,6 +160,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 10,
     padding: 15,
+  },
+  sintomasInput: {
+    height: 100,
+  },
+  fechaContenedor: {
+    backgroundColor: '#FFF',
+    borderRadius: 10,
   },
 });
 export default Formulario;
