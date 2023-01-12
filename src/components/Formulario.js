@@ -18,9 +18,10 @@ const Formulario = ({
   setPacientes,
   pacientes,
   paciente: pacienteObj,
+  setPaciente: setPacienteApp, //setPaciente que proviene de App.js
 }) => {
   const [id, setId] = useState('');
-  const [paciente, setPaciente] = useState('');
+  const [paciente, setPaciente] = useState(''); // setPaciente propio de este componente
   const [propietario, setPropietario] = useState('');
   const [email, setEmail] = useState('');
   const [telefono, setTelefono] = useState('');
@@ -37,30 +38,9 @@ const Formulario = ({
       setFecha(pacienteObj.fecha);
       setSintomas(pacienteObj.sintomas);
     }
-  }, []);
+  }, [pacienteObj]);
 
-  const cancelarCitaHandler = () => {
-    setModalVisible(!modalVisible);
-  };
-
-  const handleCita = () => {
-    //TODO
-    if ([paciente, propietario, email, fecha, sintomas].includes(''))
-      return Alert.alert('Error', 'Todos los campos son obligatorios');
-
-    const nuevoPaciente = {
-      id: Date.now(),
-      paciente,
-      propietario,
-      email,
-      fecha,
-      sintomas,
-    };
-
-    //actualizando el State del componente principal (App.js)
-    setPacientes([...pacientes, nuevoPaciente]);
-    setModalVisible(!modalVisible);
-
+  const resetValues = () => {
     //Vaciando los campos
     setPaciente('');
     setPropietario('');
@@ -70,21 +50,54 @@ const Formulario = ({
     setSintomas('');
   };
 
+  const handleCita = () => {
+    //TODO
+    if ([paciente, propietario, email, fecha, sintomas].includes(''))
+      return Alert.alert('Error', 'Todos los campos son obligatorios');
+
+    const nuevoPaciente = {
+      paciente,
+      propietario,
+      email,
+      fecha,
+      sintomas,
+    };
+
+    if (id) {
+      //Editar Registro Existente
+      nuevoPaciente.id = id;
+
+      const pacientesActualizados = pacientes.map(
+        pacienteState =>
+          (pacienteState.id = nuevoPaciente.id ? nuevoPaciente : pacienteState),
+      );
+
+      setPacientes(pacientesActualizados);
+      setPacienteApp({}); // vaciando el paciente recibido desde App
+    } else {
+      // Nuevo registro
+      nuevoPaciente.id = Date.now();
+      setPacientes([...pacientes, nuevoPaciente]);
+    }
+
+    resetValues();
+  };
+
   return (
     <Modal animationType="slide" visible={modalVisible}>
       <SafeAreaView style={styles.contenido}>
         <ScrollView>
           <Text style={styles.titulo}>
-            Nueva
+            {pacienteObj.id ? 'Editar' : 'Nueva'}{' '}
             <Text style={styles.tituloBold}>Cita</Text>
           </Text>
 
-          <Pressable style={styles.btnCancelar}>
-            <Text
-              style={styles.btnCancelarTexto}
-              onLongPress={cancelarCitaHandler}>
-              Cancelar
-            </Text>
+          <Pressable
+            style={styles.btnCancelar}
+            onLongPress={() => {
+              setModalVisible(!modalVisible), resetValues();
+            }}>
+            <Text style={styles.btnCancelarTexto}>Cancelar</Text>
           </Pressable>
 
           <View style={styles.campo}>
@@ -160,7 +173,9 @@ const Formulario = ({
           </View>
 
           <Pressable style={styles.btnNuevaCita} onPress={handleCita}>
-            <Text style={styles.btnNuevaCitaTexto}>Agregar Paciente</Text>
+            <Text style={styles.btnNuevaCitaTexto}>
+              {pacienteObj.id ? 'Editar' : 'Agregar'} Paciente
+            </Text>
           </Pressable>
         </ScrollView>
       </SafeAreaView>

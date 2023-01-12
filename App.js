@@ -60,6 +60,7 @@ const App = () => {
         setPacientes={setPacientes}
         pacientes={pacientes}
         paciente={paciente}
+        setPaciente={setPaciente}
       />
     </SafeAreaView>
   );
