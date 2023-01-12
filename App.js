@@ -12,9 +12,16 @@ import Paciente from './src/components/Paciente';
 const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [pacientes, setPacientes] = useState([]);
+  const [paciente, setPaciente] = useState({});
 
-  onNuevaCitaHandler = () => {
+  const onNuevaCitaHandler = () => {
     setModalVisible(true);
+  };
+
+  const pacienteEditar = id => {
+    const pacienteEditar = paciente.filter(paciente => paciente.id === id);
+
+    setPaciente(pacienteEditar[0]);
   };
 
   return (
@@ -36,7 +43,13 @@ const App = () => {
           data={pacientes}
           keyExtractor={item => item.id}
           renderItem={({item}) => {
-            return <Paciente item={item} />;
+            return (
+              <Paciente
+                item={item}
+                setModalVisible={setModalVisible}
+                pacienteEditar={pacienteEditar}
+              />
+            );
           }}
         />
       )}
