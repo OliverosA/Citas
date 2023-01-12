@@ -23,7 +23,7 @@ const App = () => {
   };
 
   const pacienteEditar = id => {
-    const pacienteEditar = paciente.filter(paciente => paciente.id === id);
+    const pacienteEditar = pacientes.filter(paciente => paciente.id === id);
 
     setPaciente(pacienteEditar[0]);
   };
@@ -92,7 +92,10 @@ const App = () => {
       />
 
       <Modal visible={modalPaciente} animationType="fade">
-        <InformacionPaciente paciente={paciente} />
+        <InformacionPaciente
+          paciente={paciente}
+          setModalPaciente={setModalPaciente}
+        />
       </Modal>
     </SafeAreaView>
   );

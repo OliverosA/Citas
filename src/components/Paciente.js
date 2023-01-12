@@ -7,8 +7,9 @@ const Paciente = ({
   setPaciente,
   pacienteEditar,
   pacienteEliminar,
+  setModalPaciente,
 }) => {
-  const {paciente, fecha, id, setModalPaciente} = item;
+  const {paciente, fecha, id} = item;
 
   const formatearFecha = fecha => {
     const nuevaFecha = new Date(fecha);
@@ -22,9 +23,6 @@ const Paciente = ({
     return nuevaFecha.toLocaleDateString('es-ES', opciones);
   };
 
-  const handleModalShow = () => {
-    setModalVisible(true);
-  };
   return (
     <Pressable
       onLongPress={() => {
@@ -39,7 +37,7 @@ const Paciente = ({
           <Pressable
             style={[styles.btn, styles.btnEditar]}
             onLongPress={() => {
-              handleModalShow, pacienteEditar(id);
+              setModalVisible(true), pacienteEditar(id);
             }}>
             <Text style={styles.btnTexto}>Editar</Text>
           </Pressable>
