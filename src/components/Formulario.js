@@ -35,6 +35,7 @@ const Formulario = ({
       return Alert.alert('Error', 'Todos los campos son obligatorios');
 
     const nuevoPaciente = {
+      id: Date.now(),
       paciente,
       propietario,
       email,

@@ -1,13 +1,20 @@
 import React, {useState} from 'react';
-import {SafeAreaView, Text, StyleSheet, Pressable} from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  StyleSheet,
+  Pressable,
+  FlatList,
+} from 'react-native';
 import Formulario from './src/components/Formulario';
+import Paciente from './src/components/Paciente';
 
 const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [pacientes, setPacientes] = useState([]);
 
   onNuevaCitaHandler = () => {
-    setModalVisible(!modalVisible);
+    setModalVisible(true);
   };
 
   return (
@@ -20,6 +27,19 @@ const App = () => {
       <Pressable style={styles.btnNuevaCita} onPress={onNuevaCitaHandler}>
         <Text style={styles.btnTextoNuevaCita}>Nueva Cita</Text>
       </Pressable>
+
+      {pacientes.length === 0 ? (
+        <Text style={styles.noPacientes}>No hay pacientes aún</Text>
+      ) : (
+        <FlatList
+          data={pacientes}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => {
+            return <Paciente item={item} />;
+          }}
+        />
+      )}
+
       <Formulario
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
@@ -58,6 +78,12 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     textAlign: 'center',
     textTransform: 'uppercase',
+  },
+  noPacientes: {
+    fontSize: 24,
+    fontWeight: '600',
+    marginTop: 40,
+    textAlign: 'center',
   },
 });
 
