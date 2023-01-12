@@ -9,7 +9,7 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import DatePicker from 'react-native-date-picker';
 
 const Formulario = ({
@@ -17,13 +17,27 @@ const Formulario = ({
   setModalVisible,
   setPacientes,
   pacientes,
+  paciente: pacienteObj,
 }) => {
+  const [id, setId] = useState('');
   const [paciente, setPaciente] = useState('');
   const [propietario, setPropietario] = useState('');
   const [email, setEmail] = useState('');
   const [telefono, setTelefono] = useState('');
   const [fecha, setFecha] = useState(new Date());
   const [sintomas, setSintomas] = useState('');
+
+  useEffect(() => {
+    if (Object.entries(pacienteObj).length > 0) {
+      setId(pacienteObj.id);
+      setPaciente(pacienteObj.paciente);
+      setPropietario(pacienteObj.propietario);
+      setEmail(pacienteObj.email);
+      setTelefono(pacienteObj.telefono);
+      setFecha(pacienteObj.fecha);
+      setSintomas(pacienteObj.sintomas);
+    }
+  }, []);
 
   const cancelarCitaHandler = () => {
     setModalVisible(!modalVisible);
