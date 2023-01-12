@@ -7,11 +7,17 @@ import {
   TextInput,
   ScrollView,
   Pressable,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import DatePicker from 'react-native-date-picker';
 
-const Formulario = ({modalVisible, setModalVisible}) => {
+const Formulario = ({
+  modalVisible,
+  setModalVisible,
+  setPacientes,
+  pacientes,
+}) => {
   const [paciente, setPaciente] = useState('');
   const [propietario, setPropietario] = useState('');
   const [email, setEmail] = useState('');
@@ -19,8 +25,34 @@ const Formulario = ({modalVisible, setModalVisible}) => {
   const [fecha, setFecha] = useState(new Date());
   const [sintomas, setSintomas] = useState('');
 
-  cancelarCitaHandler = () => {
+  const cancelarCitaHandler = () => {
     setModalVisible(!modalVisible);
+  };
+
+  const handleCita = () => {
+    //TODO
+    if ([paciente, propietario, email, fecha, sintomas].includes(''))
+      return Alert.alert('Error', 'Todos los campos son obligatorios');
+
+    const nuevoPaciente = {
+      paciente,
+      propietario,
+      email,
+      fecha,
+      sintomas,
+    };
+
+    //actualizando el State del componente principal (App.js)
+    setPacientes([...pacientes, nuevoPaciente]);
+    setModalVisible(!modalVisible);
+
+    //Vaciando los campos
+    setPaciente('');
+    setPropietario('');
+    setTelefono('');
+    setEmail('');
+    setFecha(new Date());
+    setSintomas('');
   };
 
   return (
@@ -112,7 +144,7 @@ const Formulario = ({modalVisible, setModalVisible}) => {
             />
           </View>
 
-          <Pressable style={styles.btnNuevaCita}>
+          <Pressable style={styles.btnNuevaCita} onPress={handleCita}>
             <Text style={styles.btnNuevaCitaTexto}>Agregar Paciente</Text>
           </Pressable>
         </ScrollView>
