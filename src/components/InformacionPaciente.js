@@ -6,7 +6,7 @@ const InformacionPaciente = ({paciente, setModalPaciente, setPaciente}) => {
   return (
     <SafeAreaView style={styles.contenedor}>
       <Text style={styles.titulo}>
-        Informacion <Text style={styles.tituloBold}>Paciente</Text>
+        Información Del <Text style={styles.tituloBold}>Paciente</Text>
       </Text>
 
       <View>
