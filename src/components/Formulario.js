@@ -81,6 +81,7 @@ const Formulario = ({
     }
 
     resetValues();
+    setModalVisible(!modalVisible);
   };
 
   return (
@@ -95,7 +96,7 @@ const Formulario = ({
           <Pressable
             style={styles.btnCancelar}
             onLongPress={() => {
-              setModalVisible(!modalVisible), resetValues();
+              setModalVisible(!modalVisible), setPacienteApp({}), resetValues();
             }}>
             <Text style={styles.btnCancelarTexto}>Cancelar</Text>
           </Pressable>

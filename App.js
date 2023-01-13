@@ -39,9 +39,9 @@ const App = () => {
           text: 'Si, Eliminar',
           onPress: () => {
             const pacientesActualizados = pacientes.filter(
-              pacientesState => pacientesState.id === id,
+              pacientesState => pacientesState.id !== id,
             );
-
+            //actualizando los pacientes
             setPacientes(pacientesActualizados);
           },
         },
