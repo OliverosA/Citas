@@ -1,13 +1,12 @@
 import {Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {formatearFecha} from './helpers';
+import {formatearFecha} from '../helpers';
 
 const InformacionPaciente = ({paciente, setModalPaciente, setPaciente}) => {
   return (
     <SafeAreaView style={styles.contenedor}>
       <Text style={styles.titulo}>
-        Informacion
-        <Text style={styles.tituloBold}>Paciente</Text>
+        Informacion <Text style={styles.tituloBold}>Paciente</Text>
       </Text>
 
       <View>
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   contenido: {
-    bgcolor: '#FFF',
+    backgroundColor: '#FFF',
     borderRadius: 10,
     marginHorizontal: 30,
     padding: 20,
